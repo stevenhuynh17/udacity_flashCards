@@ -1,24 +1,37 @@
 import React, { Component } from 'react'
 import { View, Text } from 'react-native'
+import { getDeck } from '../utils/helpers'
 
 import TextButton from './TextButton'
 
 export default class SingleDeck extends Component {
-  // static navigationOptions = ({ navigation }) => {
-  //   console.log(navigation.state.params)
-  // }
+  state = {
+    title: "",
+    cards: ""
+  }
+
+  componentDidMount() {
+    const { navigation } = this.props
+    const { id } = navigation.state.params
+
+    getDeck(id)
+    .then((data) => {
+      this.setState((state) => ({
+        title: data.title,
+        cards: data.questions
+      }))
+    })
+  }
 
   render() {
-    const { navigation } = this.props
-    const { deck } = navigation.state.params
-    const { title, questions } = deck
+    const { title, cards } = this.state
 
     return(
       <View>
-        <Text>{title}</Text>
-        <Text>{questions.length} cards</Text>
+        <Text>{this.state.title}</Text>
+        <Text>{this.state.cards.length} cards</Text>
         <TextButton>Add Card</TextButton>
-        <TextButton onPress={() => (navigation.navigate("Quiz"))}>Start Quiz</TextButton>
+        <TextButton onPress={() => (navigation.navigate("Quiz", { id: id}))}>Start Quiz</TextButton>
       </View>
     )
   }

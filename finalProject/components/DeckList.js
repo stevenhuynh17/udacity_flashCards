@@ -26,7 +26,7 @@ class DeckList extends Component {
           return(
             <View key={title}>
               <TouchableOpacity
-                onPress={(info) => (this.props.navigation.navigate("Deck", { deck: data}))}>
+                onPress={(info) => (this.props.navigation.navigate("Deck", { id: title}))}>
                 <Text>
                   {title}
                 </Text>

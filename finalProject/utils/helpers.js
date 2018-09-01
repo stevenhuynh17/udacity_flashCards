@@ -32,7 +32,11 @@ export function getDecks() {
 }
 
 export function getDeck(id) {
-
+  return AsyncStorage.getItem(DECK_KEY)
+  .then((data) => {
+    result = JSON.parse(data)
+    return result[id]
+  })
 }
 
 export function saveDeckTitle(title) {

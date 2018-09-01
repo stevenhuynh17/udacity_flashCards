@@ -4,6 +4,7 @@ import { createStackNavigator } from 'react-navigation'
 
 import DeckList from './components/DeckList'
 import SingleDeck from './components/SingleDeck'
+import Quiz from './components/Quiz'
 
 const MainNavigator = createStackNavigator({
   Decks: {
@@ -11,6 +12,9 @@ const MainNavigator = createStackNavigator({
   },
   Deck: {
     screen: SingleDeck
+  },
+  Quiz: {
+    screen: Quiz
   }
 })
 

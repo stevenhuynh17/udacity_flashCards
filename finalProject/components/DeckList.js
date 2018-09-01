@@ -15,7 +15,6 @@ class DeckList extends Component {
   }
 
   render() {
-    console.log(this.state.data)
     Object.values(this.state.data).map((data) => {
       const { title } = data
       console.log(title)
@@ -27,7 +26,7 @@ class DeckList extends Component {
           return(
             <View key={title}>
               <TouchableOpacity
-                onPress={(info) => (console.log(this.props.navigation.navigate("Deck")))}>
+                onPress={(info) => (this.props.navigation.navigate("Deck", { deck: data}))}>
                 <Text>
                   {title}
                 </Text>

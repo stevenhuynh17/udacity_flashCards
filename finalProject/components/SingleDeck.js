@@ -25,13 +25,15 @@ export default class SingleDeck extends Component {
 
   render() {
     const { title, cards } = this.state
+    const { navigation } = this.props
+    const { id } = navigation.state.params
 
     return(
       <View>
-        <Text>{this.state.title}</Text>
-        <Text>{this.state.cards.length} cards</Text>
+        <Text>{title}</Text>
+        <Text>{cards.length} cards</Text>
         <TextButton>Add Card</TextButton>
-        <TextButton onPress={() => (navigation.navigate("Quiz", { id: id}))}>Start Quiz</TextButton>
+        <TextButton onPress={() => (navigation.navigate("Quiz", { id: id }))}>Start Quiz</TextButton>
       </View>
     )
   }

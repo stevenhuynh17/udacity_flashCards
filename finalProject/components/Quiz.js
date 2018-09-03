@@ -6,10 +6,12 @@ import TextButton from './TextButton'
 
 export default class Quiz extends Component {
   state = {
-    correct: null,
+    correct: 0,
     viewAnswer: false,
     currentQuestion: "",
     currentAnswer: "",
+    questions: [],
+    index: 0,
     cards: ""
   }
 
@@ -22,13 +24,15 @@ export default class Quiz extends Component {
       const { questions } = data
       this.setState((state) => ({
         currentQuestion: questions[0].question,
-        currentAnswer: questions[0].answer
+        currentAnswer: questions[0].answer,
+        questions: questions
       }))
     })
   }
 
-  cardsLeft = () => {
-
+  gradeQuiz = () => {
+    const { correct, questions } = this.state
+    return (correct / parseFloat(questions.length)) * 100
   }
 
   toggleAnswer = () => {
@@ -37,23 +41,67 @@ export default class Quiz extends Component {
     }))
   }
 
+  toggleCorrect = () => {
+    const { questions, index } = this.state
+    const position = questions[index + 1]
+
+    this.setState((state) => ({
+      correct: state.correct + 1,
+      index: state.index + 1,
+      currentQuestion: position === undefined ? "" : questions[state.index + 1].question,
+      currentAnswer:  position === undefined ? "" : questions[state.index + 1].answer
+    }))
+  }
+
+  toggleIncorrect = () => {
+    const { questions, index } = this.state
+    const position = questions[index + 1]
+
+    this.setState((state) => ({
+      index: state.index + 1,
+      currentQuestion: position === undefined ? "" : questions[state.index + 1].question,
+      currentAnswer:  position === undefined ? "" : questions[state.index + 1].answer
+    }))
+  }
+
+  checkComplete = () => {
+    const { index, questions } = this.state
+    console.log("QUESTIONS", questions)
+    return index === questions.length
+  }
+
   render() {
     // const { navigation } = this.props
     // const { deck } = navigation.state.params
     // console.log(deck)
     console.log(this.state)
-    const { currentQuestion, currentAnswer, viewAnswer } = this.state
+    const { currentQuestion, currentAnswer, viewAnswer, correct, questions } = this.state
     return(
       <View>
-        <Text>How many cards header</Text>
-        {
-          viewAnswer === false
-          ? <Text>{currentAnswer}</Text>
-          : <Text>{currentQuestion}</Text>
+        {this.checkComplete()
+          ? <View>
+              <Text>Quiz Complete!!!</Text>
+              <Text>Your score: {this.gradeQuiz()}%</Text>
+            </View>
+          : <View>
+              <Text>{correct} / {questions.length}</Text>
+              {
+                viewAnswer === false
+                ? <View>
+                    <Text>{currentQuestion}</Text>
+                    <TextButton onPress={this.toggleAnswer}>View Answer</TextButton>
+                  </View>
+
+                : <View>
+                    <Text>{currentAnswer}</Text>
+                    <TextButton onPress={this.toggleAnswer}>View Question</TextButton>
+                  </View>
+              }
+              <TextButton onPress={this.toggleCorrect}>Correct</TextButton>
+              <TextButton onPress={this.toggleIncorrect}>Incorrect</TextButton>
+            </View>
         }
-        <TextButton onPress={this.toggleAnswer}>View Answer or Question</TextButton>
-        <TextButton>Correct</TextButton>
-        <TextButton>Incorrect</TextButton>
+
       </View>
     )
   }

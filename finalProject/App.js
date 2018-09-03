@@ -1,14 +1,27 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { createStackNavigator } from 'react-navigation'
+import { createStackNavigator, createBottomTabNavigator } from 'react-navigation'
 
 import DeckList from './components/DeckList'
 import SingleDeck from './components/SingleDeck'
 import Quiz from './components/Quiz'
+import NewDeck from './components/NewDeck'
+
+const Tabs = createBottomTabNavigator({
+  Decks: {
+    screen: DeckList
+  },
+  NewDeck: {
+    screen: NewDeck,
+    navigationOptions: {
+      tabBarLabel: 'New Deck'
+    }
+  }
+})
 
 const MainNavigator = createStackNavigator({
-  Decks: {
-    screen: DeckList,
+  Home: {
+    screen: Tabs
   },
   Deck: {
     screen: SingleDeck
@@ -18,10 +31,11 @@ const MainNavigator = createStackNavigator({
   }
 })
 
+
 class App extends React.Component {
   render() {
     return (
-      <MainNavigator />
+      <MainNavigator/>
     );
   }
 }

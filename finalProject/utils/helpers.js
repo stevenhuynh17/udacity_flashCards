@@ -40,9 +40,31 @@ export function getDeck(id) {
 }
 
 export function saveDeckTitle(title) {
-
+  console.log("INSIDE SAVE DECK TITLE")
+  data = {
+    [title]: {
+      title: title,
+      questions: []
+    }
+  }
+  return AsyncStorage.mergeItem(DECK_KEY, JSON.stringify(data), () => {
+    AsyncStorage.getItem(DECK_KEY, (err, result) => {
+      console.log(JSON.parse(result))
+    })
+  })
 }
 
 export function addCardToDeck(title, card) {
+  // data = {
+  //   [title]: {
+  //
+  //   }
+  // }
 
+
+  return AsyncStorage.mergeItem(DECK_KEY, JSON.stringify(data), () => {
+    AsyncStorage.getItem(DECK_KEY, (err, result) => {
+      console.log(JSON.parse(result))
+    })
+  })
 }

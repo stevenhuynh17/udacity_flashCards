@@ -16,9 +16,16 @@ export default class NewCard extends Component {
     const { navigation } = this.props
     const { id } = navigation.state.params
     const card = {
-      question: question,
-      answer: answer
+      "questions": [
+        {
+          question: question,
+          answer: answer
+        }
+      ]
     }
+    console.log(question, answer)
+    // console.log(this.props.navigation.state.params.update)
+    this.props.navigation.state.params.update()
     addCardToDeck(id, card)
     this.props.navigation.navigate("Decks", {update: this.props.navigation.state.params.update})
 
@@ -28,10 +35,10 @@ export default class NewCard extends Component {
     return(
       <View>
         <FormLabel>Question</FormLabel>
-        <FormInput onChangeText={(text) => this.setState({text})} />
+        <FormInput onChangeText={(question) => this.setState({question})} />
         <FormValidationMessage>Required</FormValidationMessage>
         <FormLabel>Answer</FormLabel>
-        <FormInput onChangeText={(text) => this.setState({text})} />
+        <FormInput onChangeText={(answer) => this.setState({answer})} />
         <FormValidationMessage>Required</FormValidationMessage>
         <TextButton onPress={this.handleSubmit}>Submit</TextButton>
     </View>

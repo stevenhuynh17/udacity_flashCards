@@ -25,6 +25,7 @@ const data = {
     ]
   }
 }
+// AsyncStorage.clear()
 
 export function initialize() {
   return AsyncStorage.setItem(DECK_KEY, JSON.stringify(data), () => {
@@ -61,17 +62,9 @@ export function saveDeckTitle(title) {
 }
 
 export function addCardToDeck(title, card) {
-  // data = {
-  //   [title]: {
-  //     title: title,
-  //     questions: card
-  //   }
-  // }
-  //
-  //
-  // return AsyncStorage.mergeItem(DECK_KEY, JSON.stringify(data), () => {
-  //   AsyncStorage.getItem(DECK_KEY, (err, result) => {
-  //     console.log(JSON.parse(result))
-  //   })
-  // })
+  data = {
+    [title]: card
+  }
+  console.log(data)
+  return AsyncStorage.mergeItem(DECK_KEY, JSON.stringify(data))
 }

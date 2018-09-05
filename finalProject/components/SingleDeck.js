@@ -12,6 +12,7 @@ export default class SingleDeck extends Component {
 
   componentDidMount() {
     const { navigation } = this.props
+
     const { id } = navigation.state.params
 
     getDeck(id)
@@ -27,7 +28,7 @@ export default class SingleDeck extends Component {
     const { title, cards } = this.state
     const { navigation } = this.props
     const { id } = navigation.state.params
-
+    // console.log(this.props.navigation.state.params.update())
     return(
       <View>
         <Text>{title}</Text>

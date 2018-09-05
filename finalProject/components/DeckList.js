@@ -10,7 +10,7 @@ class DeckList extends Component {
   componentDidMount() {
     getDecks()
     .then((info) => {
-      console.log(info)
+      console.log(JSON.parse(info))
       if(info) {
         this.setState({
           data: JSON.parse(info)
@@ -27,12 +27,14 @@ class DeckList extends Component {
     })
   }
 
-  updateList() {
-    getDecks()
-    .then((info) => {
-      this.setState({
-        data: info
-      })
+  test = () => {
+    console.log("test")
+  }
+
+  updateList = () => {
+    console.log("INSIDE UPDATELIST")
+    this.setState({
+      dummy: ""
     })
   }
 

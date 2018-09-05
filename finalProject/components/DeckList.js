@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { View, Text, TouchableOpacity } from 'react-native'
-import { getDecks } from '../utils/helpers'
+import { getDecks, initialize } from '../utils/helpers'
 
 class DeckList extends Component {
   state = {
@@ -9,9 +9,31 @@ class DeckList extends Component {
 
   componentDidMount() {
     getDecks()
-      .then((info) => this.setState({
-        data: JSON.parse(info)
-      }))
+    .then((info) => {
+      console.log(info)
+      if(info) {
+        this.setState({
+          data: JSON.parse(info)
+        })
+      } else {
+        console.log("NOPE")
+        initialize()
+        .then((start) => {
+          this.setState({
+            data: JSON.parse(start)
+          })
+        })
+      }
+    })
+  }
+
+  updateList() {
+    getDecks()
+    .then((info) => {
+      this.setState({
+        data: info
+      })
+    })
   }
 
   render() {
@@ -26,7 +48,7 @@ class DeckList extends Component {
           return(
             <View key={title}>
               <TouchableOpacity
-                onPress={(info) => (this.props.navigation.navigate("Deck", { id: title}))}>
+                onPress={(info) => (this.props.navigation.navigate("Deck", { id: title, update: this.updateList}))}>
                 <Text>
                   {title}
                 </Text>

@@ -70,6 +70,32 @@ export default class Quiz extends Component {
     return index === questions.length
   }
 
+  reset = () => {
+    this.setState({
+      correct: 0,
+      viewAnswer: false,
+      currentQuestion: "",
+      currentAnswer: "",
+      questions: [],
+      index: 0,
+      cards: ""
+      }
+    )
+
+    const { navigation } = this.props
+    const { id } = navigation.state.params
+
+    getDeck(id)
+    .then((data) => {
+      const { questions } = data
+      this.setState((state) => ({
+        currentQuestion: questions[0].question,
+        currentAnswer: questions[0].answer,
+        questions: questions
+      }))
+    })
+  }
+
   render() {
     // const { navigation } = this.props
     // const { deck } = navigation.state.params
@@ -82,6 +108,8 @@ export default class Quiz extends Component {
           ? <View>
               <Text>Quiz Complete!!!</Text>
               <Text>Your score: {this.gradeQuiz()}%</Text>
+              <TextButton onPress={this.reset}>Restart Quiz</TextButton>
+              <TextButton>Back to Deck</TextButton>
             </View>
           : <View>
               <Text>{correct} / {questions.length}</Text>

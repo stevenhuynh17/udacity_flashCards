@@ -13,6 +13,7 @@ export default class NewDeck extends Component {
   handleSubmit = () => {
     const title = this.state.text
     saveDeckTitle(title)
+    console.log(this.props.navigation.state.params)
     this.props.navigation.navigate("NewCard", {id:title})
   }
 

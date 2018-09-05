@@ -15,14 +15,12 @@ export default class NewCard extends Component {
     const { question, answer } = this.state
     const { navigation } = this.props
     const { id } = navigation.state.params
-    console.log("TESTING")
-    console.log(id)
     const card = {
       question: question,
       answer: answer
     }
     addCardToDeck(id, card)
-    this.props.navigation.navigate("Decks")
+    this.props.navigation.navigate("Decks", {update: this.props.navigation.state.params.update})
 
   }
 

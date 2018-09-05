@@ -32,7 +32,7 @@ export default class SingleDeck extends Component {
       <View>
         <Text>{title}</Text>
         <Text>{cards.length} cards</Text>
-        <TextButton onPress={() => (navigation.navigate("NewCard", { id: id }))}>Add Card</TextButton>
+        <TextButton onPress={() => (navigation.navigate("NewCard", { id: id, update: this.props.navigation.state.params.update }))}>Add Card</TextButton>
         <TextButton onPress={() => (navigation.navigate("Quiz", { id: id }))}>Start Quiz</TextButton>
       </View>
     )

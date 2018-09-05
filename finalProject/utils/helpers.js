@@ -26,9 +26,18 @@ const data = {
   }
 }
 
+export function initialize() {
+  return AsyncStorage.setItem(DECK_KEY, JSON.stringify(data), () => {
+    AsyncStorage.getItem(DECK_KEY)
+  })
+}
+
 export function getDecks() {
-  return AsyncStorage.setItem(DECK_KEY, JSON.stringify(data))
-    .then(() => AsyncStorage.getItem(DECK_KEY))
+  try {
+    return AsyncStorage.getItem(DECK_KEY)
+  } catch(error) {
+    console.log(error)
+  }
 }
 
 export function getDeck(id) {
@@ -40,7 +49,6 @@ export function getDeck(id) {
 }
 
 export function saveDeckTitle(title) {
-  console.log("INSIDE SAVE DECK TITLE")
   data = {
     [title]: {
       title: title,
@@ -48,23 +56,22 @@ export function saveDeckTitle(title) {
     }
   }
   return AsyncStorage.mergeItem(DECK_KEY, JSON.stringify(data), () => {
-    AsyncStorage.getItem(DECK_KEY, (err, result) => {
-      console.log(JSON.parse(result))
-    })
+    getDeck()
   })
 }
 
 export function addCardToDeck(title, card) {
   // data = {
   //   [title]: {
-  //
+  //     title: title,
+  //     questions: card
   //   }
   // }
-
-
-  return AsyncStorage.mergeItem(DECK_KEY, JSON.stringify(data), () => {
-    AsyncStorage.getItem(DECK_KEY, (err, result) => {
-      console.log(JSON.parse(result))
-    })
-  })
+  //
+  //
+  // return AsyncStorage.mergeItem(DECK_KEY, JSON.stringify(data), () => {
+  //   AsyncStorage.getItem(DECK_KEY, (err, result) => {
+  //     console.log(JSON.parse(result))
+  //   })
+  // })
 }

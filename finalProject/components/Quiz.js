@@ -109,7 +109,7 @@ export default class Quiz extends Component {
               <Text>Quiz Complete!!!</Text>
               <Text>Your score: {this.gradeQuiz()}%</Text>
               <TextButton onPress={this.reset}>Restart Quiz</TextButton>
-              <TextButton>Back to Deck</TextButton>
+              <TextButton onPress={() => (this.props.navigation.goBack())}>Back to Deck</TextButton>
             </View>
           : <View>
               <Text>{correct} / {questions.length}</Text>

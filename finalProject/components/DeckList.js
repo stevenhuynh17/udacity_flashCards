@@ -1,56 +1,35 @@
 import React, { Component } from 'react'
 import { View, Text, TouchableOpacity } from 'react-native'
+import { connect } from 'react-redux'
+
 import { getDecks, initialize } from '../utils/helpers'
+import { receiveDecks } from '../actions'
 
 class DeckList extends Component {
-  state = {
-    data: {}
-  }
-
   componentDidMount() {
     getDecks()
     .then((info) => {
-      console.log(JSON.parse(info))
       if(info) {
-        this.setState({
-          data: JSON.parse(info)
-        })
+        this.props.dispatch(receiveDecks(JSON.parse(info)))
       } else {
         console.log("NOPE")
         initialize()
         .then((start) => {
-          this.setState({
-            data: JSON.parse(start)
-          })
+          this.props.dispatch(receiveDecks(JSON.parse(info)))
         })
       }
     })
   }
 
-  test = () => {
-    console.log("test")
-  }
-
-  updateList = () => {
-    console.log("INSIDE UPDATELIST")
-    this.setState({
-      dummy: ""
-    })
-  }
-
   render() {
-    Object.values(this.state.data).map((data) => {
-      const { title } = data
-      console.log(title)
-    })
     return(
       <View>
-        {Object.values(this.state.data).map((data) => {
+        {Object.values(this.props.entries).map((data) => {
           const { title, questions } = data
           return(
             <View key={title}>
               <TouchableOpacity
-                onPress={(info) => (this.props.navigation.navigate("Deck", { id: title, update: this.updateList}))}>
+                onPress={(info) => (this.props.navigation.navigate("Deck", { id: title }))}>
                 <Text>
                   {title}
                 </Text>
@@ -66,4 +45,11 @@ class DeckList extends Component {
   }
 }
 
-export default DeckList
+function mapStateToProps(entries) {
+  console.log(entries)
+  return {
+    entries
+  }
+}
+
+export default connect(mapStateToProps)(DeckList)

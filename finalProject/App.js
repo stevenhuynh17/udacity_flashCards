@@ -1,7 +1,10 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { createStore } from 'redux'
+import { Provider } from 'react-redux'
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation'
 
+import reducer from './reducers'
 import DeckList from './components/DeckList'
 import SingleDeck from './components/SingleDeck'
 import Quiz from './components/Quiz'
@@ -35,11 +38,14 @@ const MainNavigator = createStackNavigator({
   }
 })
 
+const store = createStore(reducer)
 
-class App extends React.Component {
+export default class App extends React.Component {
   render() {
     return (
-      <MainNavigator/>
+      <Provider store={store}>
+        <MainNavigator/>
+      </Provider>
     );
   }
 }
@@ -52,5 +58,3 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
-
-export default App

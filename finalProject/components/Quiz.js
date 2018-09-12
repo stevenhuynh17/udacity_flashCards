@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { View, Text } from 'react-native'
-import { getDeck } from '../utils/helpers'
+import { connect } from 'react-redux'
 
+import { getDeck } from '../utils/helpers'
 import TextButton from './TextButton'
 
 export default class Quiz extends Component {
@@ -97,10 +98,6 @@ export default class Quiz extends Component {
   }
 
   render() {
-    // const { navigation } = this.props
-    // const { deck } = navigation.state.params
-    // console.log(deck)
-    console.log(this.state)
     const { currentQuestion, currentAnswer, viewAnswer, correct, questions } = this.state
     return(
       <View>
@@ -129,7 +126,6 @@ export default class Quiz extends Component {
               <TextButton onPress={this.toggleIncorrect}>Incorrect</TextButton>
             </View>
         }
-
       </View>
     )
   }

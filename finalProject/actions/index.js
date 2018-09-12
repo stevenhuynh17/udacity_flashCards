@@ -8,3 +8,10 @@ export function receiveDecks(decks) {
     decks
   }
 }
+
+export function addDeck(deck) {
+  return {
+    type: ADD_DECK,
+    deck
+  }
+}

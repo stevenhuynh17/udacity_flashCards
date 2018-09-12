@@ -1,20 +1,26 @@
 import React, { Component } from 'react'
 import { View, Text, TextInput } from 'react-native'
 import { FormLabel, FormInput, FormValidationMessage } from 'react-native-elements'
+import { connect } from 'react-redux'
+
 import { saveDeckTitle } from '../utils/helpers'
+import { addDeck } from '../actions'
 
 import TextButton from './TextButton'
 
-export default class NewDeck extends Component {
+class NewDeck extends Component {
   state = {
     text: ""
   }
 
   handleSubmit = () => {
     const title = this.state.text
+    this.props.dispatch(addDeck(this.props.text))
     saveDeckTitle(title)
-    console.log(this.props.navigation.state.params)
-    this.props.navigation.navigate("NewCard", {id:title})
+    this.setState({
+      text: ""
+    })
+    this.props.navigation.navigate("Deck", {id:title})
   }
 
   render() {
@@ -30,3 +36,11 @@ export default class NewDeck extends Component {
     )
   }
 }
+
+function mapStateToProps(entries) {
+  return {
+    entries
+  }
+}
+
+export default connect(mapStateToProps)(NewDeck)

@@ -50,12 +50,6 @@ export function getDeck(id) {
 }
 
 export function saveDeckTitle(title) {
-  data = {
-    [title]: {
-      title: title,
-      questions: []
-    }
-  }
   return AsyncStorage.mergeItem(DECK_KEY, JSON.stringify(data), () => {
     getDeck()
   })

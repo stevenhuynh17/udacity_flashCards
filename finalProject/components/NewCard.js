@@ -23,12 +23,8 @@ export default class NewCard extends Component {
         }
       ]
     }
-    console.log(question, answer)
-    // console.log(this.props.navigation.state.params.update)
-    this.props.navigation.state.params.update()
     addCardToDeck(id, card)
     this.props.navigation.navigate("Decks", {update: this.props.navigation.state.params.update})
-
   }
 
   render() {

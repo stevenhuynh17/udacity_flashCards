@@ -67,7 +67,6 @@ export default class Quiz extends Component {
 
   checkComplete = () => {
     const { index, questions } = this.state
-    console.log("QUESTIONS", questions)
     return index === questions.length
   }
 

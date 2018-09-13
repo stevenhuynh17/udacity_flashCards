@@ -7,7 +7,6 @@ import TextButton from './TextButton'
 
 class SingleDeck extends Component {
   render() {
-    console.log(this.props)
     const { deck, navigation } = this.props
     const { title, questions } = deck
     return(

@@ -10,37 +10,48 @@ import TextButton from './TextButton'
 
 class NewDeck extends Component {
   state = {
-    text: ""
+    name: ""
   }
 
   handleSubmit = () => {
-    const title = this.state.text
-    this.props.dispatch(addDeck(this.props.text))
-    saveDeckTitle(title)
+    const { name } = this.state
+    const { navigation } = this.props
+
+    const data = {
+      [name]: {
+        title: name,
+        questions: []
+      }
+    }
+    this.props.dispatch(addDeck(data))
+    saveDeckTitle(data)
+    navigation.navigate("Deck", {id:name})
     this.setState({
-      text: ""
+      name: ""
     })
-    this.props.navigation.navigate("Deck", {id:title})
+  }
+
+  test = () => {
+    this.setState({
+      name: ""
+    })
   }
 
   render() {
-    console.log(this.state.text)
+    console.log(this.state.name)
     return(
       <View>
         <Text>What is the title of your new deck?</Text>
-        <FormLabel>Deck Name</FormLabel>
-        <FormInput onChangeText={(text) => this.setState({text})} />
-        <FormValidationMessage>Required</FormValidationMessage>
-        <TextButton onPress={this.handleSubmit}>Submit</TextButton>
+        <View>
+          <FormLabel>Deck Name</FormLabel>
+          <FormInput value={this.state.name} onChangeText={(name) => this.setState({name})} />
+          <FormValidationMessage>Required</FormValidationMessage>
+          <TextButton onPress={this.handleSubmit}>Submit</TextButton>
+        </View>
+          <TextButton onPress={this.test}>Reset</TextButton>
       </View>
     )
   }
 }
 
-function mapStateToProps(entries) {
-  return {
-    entries
-  }
-}
-
-export default connect(mapStateToProps)(NewDeck)
+export default connect()(NewDeck)

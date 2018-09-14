@@ -1,4 +1,4 @@
-import { RECEIVE_DECKS, ADD_DECK, ADD_CARD } from '../actions'
+import { RECEIVE_DECKS, ADD_DECK, ADD_CARD, QUIZ_COMPLETE } from '../actions'
 
 function entries(state = {}, action) {
   switch(action.type) {
@@ -15,7 +15,6 @@ function entries(state = {}, action) {
       }
 
     case ADD_CARD :
-      console.log(action)
       return {
         ...state,
         [action.deck]: {
@@ -23,6 +22,15 @@ function entries(state = {}, action) {
           questions: state[action.deck].questions.concat(action.card)
         }
 
+      }
+
+    case QUIZ_COMPLETE :
+      return {
+        ...state,
+        [action.deck]: {
+          ...state[action.deck],
+          id: action.timeStamp.completeQuiz
+        }
       }
 
     default :

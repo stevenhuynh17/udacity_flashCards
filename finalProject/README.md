@@ -1,10 +1,12 @@
 # Flashcards Mobile App
 Help you study
 
+## NOTICE
+This project was developed for IOS. Android is NOT supported.
+
 ## Installation
 1) Navigate to specifically the 'finalProject' folder through your terminal
 2) Run the program by installing dependencies. Once done, load the IOS emmulator.
-I DEVELOPED FOR IOS
 
 ```linux
 yarn install

@@ -3,6 +3,7 @@ import { AsyncStorage } from 'react-native'
 const DECK_KEY = "DECKS"
 const data = {
   React: {
+    id: "",
     title: 'React',
     questions: [
       {
@@ -16,6 +17,7 @@ const data = {
     ]
   },
   JavaScript: {
+    id: "2018-09-13",
     title: 'JavaScript',
     questions: [
       {
@@ -30,6 +32,19 @@ const data = {
 export function initialize() {
   return AsyncStorage.setItem(DECK_KEY, JSON.stringify(data), () => {
     AsyncStorage.getItem(DECK_KEY)
+  })
+}
+
+export function finishQuiz(title, input) {
+  getDeck(title)
+  .then((data) => {
+    const info = {
+      [title]: {
+        ...data,
+        id: input.completeQuiz
+      }
+    }
+    return AsyncStorage.mergeItem(DECK_KEY, JSON.stringify(info), () => getDeck())
   })
 }
 
@@ -48,20 +63,14 @@ export function getDeck(id) {
 }
 
 export function saveDeckTitle(title) {
-  return AsyncStorage.mergeItem(DECK_KEY, JSON.stringify(data), () => {
+  return AsyncStorage.mergeItem(DECK_KEY, JSON.stringify(title), () => {
     getDeck()
   })
 }
 
 export function addCardToDeck(title, card) {
-  data = {
-    [title]: {
-      questions: card
-    }
-  }
   getDeck(title)
   .then((data) => {
-    console.log(data)
     const info = {
       [title]: {
         ...data,
@@ -70,5 +79,10 @@ export function addCardToDeck(title, card) {
     }
     return AsyncStorage.mergeItem(DECK_KEY, JSON.stringify(info), () => getDeck())
   })
-  // return AsyncStorage.mergeItem(DECK_KEY, JSON.stringify(data))
+}
+
+export function timeToString (time = Date.now()) {
+  const date = new Date(time)
+  const todayUTC = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()))
+  return todayUTC.toISOString().split('T')[0]
 }

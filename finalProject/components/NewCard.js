@@ -2,8 +2,10 @@ import React, { Component } from 'react'
 import { View, Text } from 'react-native'
 import { connect } from 'react-redux'
 import { FormLabel, FormInput, FormValidationMessage } from 'react-native-elements'
+
 import { addCardToDeck } from '../utils/helpers'
 import { addCard } from '../actions'
+
 import TextButton  from './TextButton'
 
 class NewCard extends Component {
@@ -22,10 +24,13 @@ class NewCard extends Component {
           answer: answer
         }
       ]
-    // addCardToDeck(id, card)
     this.props.dispatch(addCard(id, card))
     addCardToDeck(id, card)
-    this.props.navigation.navigate("Decks", {update: this.props.navigation.state.params.update})
+    this.props.navigation.navigate("Decks")
+    this.setState({
+      question: "",
+      answer: ""
+    })
   }
 
   render() {

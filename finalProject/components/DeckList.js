@@ -2,10 +2,14 @@ import React, { Component } from 'react'
 import { View, Text, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
 
-import { getDecks, initialize } from '../utils/helpers'
+import { getDecks, initialize, timeToString } from '../utils/helpers'
 import { receiveDecks } from '../actions'
 
 class DeckList extends Component {
+  state = {
+    quizComplete: false
+  }
+
   componentDidMount() {
     getDecks()
     .then((info) => {
@@ -21,11 +25,36 @@ class DeckList extends Component {
     })
   }
 
+  dailyQuiz = () => {
+    let complete = false
+    Object.values(this.props.entries).map((data) => {
+      const { id } = data
+      if(id === timeToString()) {
+        console.log("CHECKING")
+        complete = true
+      }
+    })
+    console.log(complete)
+    return complete
+  }
+
   render() {
     return(
       <View>
+        {
+          console.log("TESTING")
+        }
+        {this.dailyQuiz()
+          ? <View>
+              <Text>You studied already, but study more!</Text>
+            </View>
+          : <View>
+              <Text>STUDY NOW! START A QUIZ!</Text>
+            </View>
+        }
         {Object.values(this.props.entries).map((data) => {
-          const { title, questions } = data
+          const { title, questions, id } = data
+          console.log(id)
           return(
             <View key={title}>
               <TouchableOpacity

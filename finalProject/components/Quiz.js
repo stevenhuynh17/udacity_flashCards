@@ -2,10 +2,11 @@ import React, { Component } from 'react'
 import { View, Text } from 'react-native'
 import { connect } from 'react-redux'
 
-import { getDeck } from '../utils/helpers'
+import { getDeck, timeToString, finishQuiz } from '../utils/helpers'
+import { quizComplete } from '../actions'
 import TextButton from './TextButton'
 
-export default class Quiz extends Component {
+class Quiz extends Component {
   state = {
     correct: 0,
     viewAnswer: false,
@@ -67,6 +68,16 @@ export default class Quiz extends Component {
 
   checkComplete = () => {
     const { index, questions } = this.state
+    const { navigation } = this.props
+    const { id } = navigation.state.params
+    const input = {
+      completeQuiz: timeToString()
+    }
+
+    if(index === questions.length) {
+      this.props.dispatch(quizComplete(id, input))
+      quizComplete(id, input)
+    }
     return index === questions.length
   }
 
@@ -129,3 +140,5 @@ export default class Quiz extends Component {
     )
   }
 }
+
+export default connect()(Quiz)

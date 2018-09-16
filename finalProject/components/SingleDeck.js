@@ -14,7 +14,11 @@ class SingleDeck extends Component {
         <Text>{title}</Text>
         <Text>{questions.length} cards</Text>
         <TextButton onPress={() => (navigation.navigate("NewCard", { id: title }))}>Add Card</TextButton>
-        <TextButton onPress={() => (navigation.navigate("Quiz", { id: title }))}>Start Quiz</TextButton>
+        {questions.length
+          ? <TextButton onPress={() => (navigation.navigate("Quiz", { id: title }))}>Start Quiz</TextButton>
+          : <View></View>
+        }
+
       </View>
     )
   }

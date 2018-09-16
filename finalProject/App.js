@@ -3,8 +3,9 @@ import { StyleSheet, Text, View } from 'react-native';
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation'
-
 import reducer from './reducers'
+import { setLocalNotification } from './utils/helpers'
+
 import DeckList from './components/DeckList'
 import SingleDeck from './components/SingleDeck'
 import Quiz from './components/Quiz'
@@ -41,6 +42,9 @@ const MainNavigator = createStackNavigator({
 const store = createStore(reducer)
 
 export default class App extends React.Component {
+  componentDidMount() {
+    setLocalNotification()
+  }
   render() {
     return (
       <Provider store={store}>

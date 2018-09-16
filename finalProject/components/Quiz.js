@@ -2,7 +2,14 @@ import React, { Component } from 'react'
 import { View, Text } from 'react-native'
 import { connect } from 'react-redux'
 
-import { getDeck, timeToString, finishQuiz } from '../utils/helpers'
+import {
+  getDeck,
+  timeToString,
+  finishQuiz,
+  getDailyReminderValue,
+  clearLocalNotification,
+  setLocalNotification
+} from '../utils/helpers'
 import { quizComplete } from '../actions'
 import TextButton from './TextButton'
 
@@ -70,6 +77,7 @@ class Quiz extends Component {
     const { index, questions } = this.state
     const { navigation } = this.props
     const { id } = navigation.state.params
+
     const input = {
       completeQuiz: timeToString()
     }
@@ -77,7 +85,12 @@ class Quiz extends Component {
     if(index === questions.length) {
       this.props.dispatch(quizComplete(id, input))
       quizComplete(id, input)
+      clearLocalNotification()
+        .then(setLocalNotification)
     }
+
+
+
     return index === questions.length
   }
 
